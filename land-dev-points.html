@@ -226,10 +226,13 @@
     </div>
 
     <button id="submit">GO</button>
+
+    <div style="font-size: 12px; color:gray;">Đinh Bộ Lĩnh, July 2022</div>
     
 
 
     <script>
+
     $("#submit").click(function() {
         $$("main").style.display = "none";
         var land = $$("land").value;
@@ -251,7 +254,7 @@
                 return "";
             }
 
-
+            document.getElementById("resultPage").style.visibility = "visible";
             $('#resultTable td').remove();
             var obj = data.contribution;
             for (var i=0; i<obj.length; i++) {
@@ -260,6 +263,8 @@
                 
                 $('#resultTable').append(row);
             }
+
+
 
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -306,6 +311,9 @@
 
 </style>
 <script >
+    document.getElementById("resultPage").style.visibility = "hidden";
+
+    
     $(document).ready(function () {
     var table = $('#resultTable').DataTable({searching: false, ordering:  false, "pagingType": "numbers"});
     $('#resultTable tbody').on('click', 'tr', function () {
