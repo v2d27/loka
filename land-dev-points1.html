@@ -234,7 +234,7 @@
         var jsondata = "";
 
         $.ajax({
-        url: 'data.json',
+        url: apiurl,
         dataType: 'jsonp',
         success: function(data) {
             for (var i=0; i<data.length; i++) {
