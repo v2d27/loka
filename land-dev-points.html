@@ -255,6 +255,10 @@
             }
 
             document.getElementById("resultPage").style.visibility = "visible";
+            document.getElementById("landidtext").innerHTML = land;
+            document.getElementById("datefromtext").innerHTML = dfrom;
+            document.getElementById("datetotext").innerHTML = dto;
+
             $('#resultTable td').remove();
             var obj = data.contribution;
             for (var i=0; i<obj.length; i++) {
@@ -313,7 +317,7 @@
 <script >
     document.getElementById("resultPage").style.visibility = "hidden";
 
-    
+
     $(document).ready(function () {
     var table = $('#resultTable').DataTable({searching: false, ordering:  false, "pagingType": "numbers"});
     $('#resultTable tbody').on('click', 'tr', function () {
@@ -327,7 +331,7 @@
     });
     });
 </script>
-
+    <h2 style="text-align: center; color: white;">LAND ID <a id="landidtext"></a> (from <a id="datefromtext"></a> to <a id="datetotext"></a>)</h2>
     <table id="resultTable">
     <thead>
         <tr>
