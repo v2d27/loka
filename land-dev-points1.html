@@ -235,7 +235,7 @@
 
         $.ajax({
         url: apiurl,
-        dataType: 'jsonp',
+        dataType: 'json',
         success: function(data) {
             for (var i=0; i<data.length; i++) {
                 var row = $('<tr><td>' + data[i].continent + '</td><td>' + data[i].name + '</td><td>' + data[i].total + '</td></tr>');
