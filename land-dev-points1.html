@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>LOKA Land Development Points</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<style type="text/css">
+	 /************** 
+        Body css
+     ***************/
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #2a3132; 
+    }
+    .box {
+      width: 300px;
+      padding: 40px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background: #FEFEFE;
+      border: none;
+      border-radius: 25px;
+      text-align: center;
+    }
+    h1{
+      color: #000000;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 5px;
+    }
+    /************** 
+     Input Fields
+    ***************/
+    #datefrom{
+      border: 2px solid #0097e6;
+      background: none;
+      display: block;
+      margin: 20px auto;
+      padding: 15px 45px;
+      width: 100px;
+      outline: none;
+      color: #000000;
+      border-radius: 25px;
+      text-align: center;
+      transition: 250ms width ease, 250ms border-color ease;
+    }
+
+    #dateto{
+      border: 2px solid #0097e6;
+      background: none;
+      display: block;
+      margin: 20px auto;
+      padding: 15px 45px;
+      width: 100px;
+      outline: none;
+      color: #000000;
+      border-radius: 25px;
+      text-align: center;
+      transition: 250ms width ease, 250ms border-color ease;
+    }
+
+    #land{
+      border: 2px solid #0097e6;
+      background: none;
+      display: block;
+      margin: 20px auto;
+      padding: 15px 45px;
+      width: 200px;
+      outline: none;
+      color: #000000;
+      border-radius: 25px;
+      text-align: center;
+      transition: 250ms width ease, 250ms border-color ease;
+    }
+    /************** 
+       On Hover
+    ***************/
+    #date:hover{
+      width: 210px;
+    }
+    /************** 
+       On Focus
+    ***************/
+    #date:focus{
+      width: 230px;
+      border-color: #6fb98f;
+    }
+    /************** 
+     Submit Button
+    ***************/
+    #submit{
+      border: 2px solid #2ecc71;
+      background: #2ecc71;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      padding: 15px 40px;
+      outline: none;
+      color: #000000;
+      border-radius: 25px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: 200;
+      transition: 250ms background ease;
+      -webkit-transition: 250ms background ease;
+      -moz-transition: 250ms background ease;
+      -o-transition: 250ms background ease;
+    }
+    /************** 
+       On Hover
+    ***************/
+    #submit:hover{
+      background: #2ecc99;
+    }
+
+</style>
+
+
+<script type="text/javascript">
+
+    window.onload = onLoad;
+
+    function onLoad() {
+    	//https://api-lok-live.leagueofkingdoms.com/api/stat/land/contribution?from=2022-07-22&to=2022-07-22&landId=151276
+
+
+    	var land = getURLParameters("land");
+    	var date = getURLParameters("date");
+
+    	$$("land").innerHTML= land;
+
+    	var d = new Date(), day = d.getDate(), month = d.getMonth() + 1, year = d.getFullYear();
+    	if (day < 10) {day = "0" + day;}
+    	if (month < 10) {month = "0" + month;}
+    	var temp = year + "-" + month + "-" + day;
+    	$$("datefrom").value = temp;
+    	$$("dateto").value = temp;
+
+    	
+    }
+
+    function $$(ObjectName)
+    {
+    	return document.getElementById(ObjectName);
+    }
+
+
+    var getJSON = function(url, callback) {
+
+        var xmlhttprequest = new XMLHttpRequest();
+        xmlhttprequest.open('GET', url, true);
+        xmlhttprequest.responseType = 'json';
+
+        xmlhttprequest.onload = function() {
+
+            var status = xmlhttprequest.status;
+
+            if (status == 200) {
+                callback(null, xmlhttprequest.response);
+            } else {
+                callback(status, xmlhttprequest.response);
+            }
+        };
+
+        xmlhttprequest.send();
+    };
+
+    function getURLParameters(paramName)
+    {
+        var sURL = window.document.URL.toString();
+        if (sURL.indexOf("?") > 0)
+        {
+            var arrParams = sURL.split("?");
+            var arrURLParams = arrParams[1].split("&");
+            var arrParamNames = new Array(arrURLParams.length);
+            var arrParamValues = new Array(arrURLParams.length);
+
+            var i = 0;
+            for (i = 0; i<arrURLParams.length; i++)
+            {
+                var sParam =  arrURLParams[i].split("=");
+                arrParamNames[i] = sParam[0];
+                if (sParam[1] != "")
+                    arrParamValues[i] = unescape(sParam[1]);
+                else
+                    arrParamValues[i] = "";
+            }
+
+            for (i=0; i<arrURLParams.length; i++)
+            {
+                if (arrParamNames[i] == paramName)
+                {
+                    //alert("Parameter:" + arrParamValues[i]);
+                    return arrParamValues[i];
+                }
+            }
+            return "";
+        }
+    }
+
+</script>
+
+
+
+
+<body>
+    <div class="box">
+    <h1>LOKA LAND DEV POINTS</h1>
+
+    <input placeholder="LAND ID" type="text" onfocus="(this.value = '')"  id="land">
+
+    <div style="line-height: 0px;">
+    <input id="datefrom" type="date"/> To <input id="dateto" type="date"/>
+    </div>
+
+    <button id="submit">GO</button>
+    
+
+
+    <script>
+    $("#submit").click(function() {
+        var land = $("land").value;
+        var dfrom = $("datefrom").value;
+        var dto = $("dateto").value;
+
+        var apiurl = "https://api-lok-live.leagueofkingdoms.com/api/stat/land/contribution?from=" + dfrom + "&to=" + dto + "&landId=" + land;
+        var jsondata = "";
+
+        $.ajax({
+        url: 'data.json',
+        dataType: 'jsonp',
+        success: function(data) {
+            for (var i=0; i<data.length; i++) {
+                var row = $('<tr><td>' + data[i].continent + '</td><td>' + data[i].name + '</td><td>' + data[i].total + '</td></tr>');
+                $('#resultTable').append(row);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('Error: ' + textStatus + ' - ' + errorThrown);
+        }
+        });
+    });
+
+</script>
+    </div>
+
+
+
+
+
+
+
+<div>
+<style type="text/css">
+table {
+    width: 50%;
+}
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+    padding: 6px;
+}
+td {
+    background: #f9f9f9;
+    padding: 6px;
+}
+</style>
+    <table id="resultTable">
+    <tr>
+        <th>Continent</th>
+        <th>Name</th>
+        <th>Total</th>
+        <th>Kingdom ID</th>
+    </tr>
+</table>
+</div>
+</body>
+</html>
